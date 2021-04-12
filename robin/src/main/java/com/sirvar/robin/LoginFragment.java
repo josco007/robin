@@ -3,12 +3,9 @@ package com.sirvar.robin;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
+
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +18,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.textfield.TextInputLayout;
+
 import org.w3c.dom.Text;
 
 public class LoginFragment extends Fragment {
@@ -29,7 +31,9 @@ public class LoginFragment extends Fragment {
 
     private TextView title;
     private TextView signup;
+    private boolean showSignUp;
     private TextView forgotPassword;
+    private boolean showForgotPassword;
     private ImageView logo;
     private EditText email;
     private EditText password;
@@ -75,25 +79,56 @@ public class LoginFragment extends Fragment {
 
 
         // Login form submitted
-        submit.setOnClickListener(v -> {
-            if (fieldsFilled()) {
-                ((RobinActivity) getActivity()).onLogin(email.getText().toString(), password.getText().toString());
-            } else {
-                Toast.makeText(getContext(), "Some information is missing.", Toast.LENGTH_SHORT).show();
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (LoginFragment.this.fieldsFilled()) {
+                    ((RobinActivity) LoginFragment.this.getActivity()).onLogin(email.getText().toString(), password.getText().toString());
+                } else {
+                    Toast.makeText(LoginFragment.this.getContext(), "Some information is missing.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-        google.setOnClickListener(v -> ((RobinActivity) getActivity()).onGoogleLogin());
+        google.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((RobinActivity) LoginFragment.this.getActivity()).onGoogleLogin();
+            }
+        });
 
-        facebook.setOnClickListener(v -> ((RobinActivity) getActivity()).onFacebookLogin());
+        facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((RobinActivity) LoginFragment.this.getActivity()).onFacebookLogin();
+            }
+        });
 
-        forgotPassword.setOnClickListener(v -> ((RobinActivity) getActivity()).startForgotPasswordFragment());
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((RobinActivity) LoginFragment.this.getActivity()).startForgotPasswordFragment();
+            }
+        });
 
-        signup.setOnClickListener(v -> ((RobinActivity) getActivity()).startSignupFragment());
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((RobinActivity) LoginFragment.this.getActivity()).startSignupFragment();
+            }
+        });
 
         if (!showLogin) {
             google.setVisibility(View.INVISIBLE);
             facebook.setVisibility(View.INVISIBLE);
+        }
+
+        if (!showSignUp){
+            signup.setVisibility(View.INVISIBLE);
+        }
+
+        if (!showForgotPassword){
+            forgotPassword.setVisibility(View.INVISIBLE);
         }
 
         setDefaults();
@@ -171,6 +206,14 @@ public class LoginFragment extends Fragment {
 
     protected void showSocialLogin(boolean showLogin) {
         this.showLogin = showLogin;
+    }
+
+    protected void showRegisterOption(boolean showRegister){
+        this.showSignUp = showRegister;
+    }
+
+    protected void showForgotPassword(boolean showForgotPassword){
+        this.showForgotPassword = showForgotPassword;
     }
 
     private boolean fieldsFilled() {

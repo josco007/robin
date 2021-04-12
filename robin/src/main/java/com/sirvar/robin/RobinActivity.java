@@ -4,8 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 
 public abstract class RobinActivity extends AppCompatActivity {
 
@@ -22,6 +24,8 @@ public abstract class RobinActivity extends AppCompatActivity {
 
     private boolean loginFirst = true;
     private boolean socialLogin = true;
+    private boolean registerAccount = true;
+    private boolean forgotPassword = true;
 
     private Theme theme;
 
@@ -40,6 +44,10 @@ public abstract class RobinActivity extends AppCompatActivity {
         setDefaults();
     }
 
+    public void onCreate(){
+
+    }
+
     /**
      * Override form login
      *
@@ -56,7 +64,7 @@ public abstract class RobinActivity extends AppCompatActivity {
      * @param email    username or email address entered by user
      * @param password raw password
      */
-    public void onSignup(String name, @Nullable String email,@Nullable String password){
+    public void onSignup(String name, @Nullable String email, @Nullable String password){
 
     }
 
@@ -121,6 +129,39 @@ public abstract class RobinActivity extends AppCompatActivity {
         socialLogin = false;
         loginFragment.showSocialLogin(socialLogin);
     }
+
+    /**
+     * Enables register option
+     */
+    protected void enableRegister() {
+        registerAccount = true;
+        loginFragment.showRegisterOption(registerAccount);
+    }
+
+    /**
+     * Hides register option
+     */
+    protected void disableRegister() {
+        registerAccount = false;
+        loginFragment.showRegisterOption(registerAccount);
+    }
+
+    /**
+     * Enables register option
+     */
+    protected void enableForgotPassword() {
+        forgotPassword = true;
+        loginFragment.showForgotPassword(forgotPassword);
+    }
+
+    /**
+     * Hides register option
+     */
+    protected void disableForgotPassword() {
+        forgotPassword = false;
+        loginFragment.showForgotPassword(forgotPassword);
+    }
+
 
     protected void showLoginFirst() {
         loginFirst = true;

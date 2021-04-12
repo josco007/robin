@@ -2,7 +2,7 @@ package com.sirvar.robin.demo;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.View;
+
 import android.widget.Toast;
 
 import com.sirvar.robin.LoginFragment;
@@ -12,18 +12,21 @@ import com.sirvar.robin.Theme;
 
 public class MainActivity extends RobinActivity {
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setLoginTitle("Sign in to Robin");
         setSignupTitle("Welcome to Robin");
         setForgotPasswordTitle("Forgot Password");
         setImage(getResources().getDrawable(R.drawable.logo));
-        setFont(Typeface.createFromAsset(getAssets(), "Montserrat-Medium.ttf"));
+        //setFont(Typeface.createFromAsset(getAssets(), "Montserrat-Medium.ttf"));
         setTheme(Theme.LIGHT);
-        enableSocialLogin();
+        disableSocialLogin();
         showLoginFirst();
+        disableRegister();
+        disableForgotPassword();
     }
 
     @Override
@@ -48,18 +51,18 @@ public class MainActivity extends RobinActivity {
 
     @Override
     public void onLogin(String email, String password) {
-        Toast.makeText(getApplicationContext(), "Login", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Login", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onSignup(String name, String email, String password) {
-        Toast.makeText(getApplicationContext(), "Signup", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Signup", Toast.LENGTH_SHORT).show();
         // Make API call
     }
 
     @Override
     public void onForgotPassword(String email) {
-        Toast.makeText(getApplicationContext(), "Forgot Password", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Forgot Password", Toast.LENGTH_SHORT).show();
         // Make API call
         // After sent password email callback
         startLoginFragment();
@@ -67,11 +70,11 @@ public class MainActivity extends RobinActivity {
 
     @Override
     public void onGoogleLogin() {
-        Toast.makeText(getApplicationContext(), "Google", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Google", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onFacebookLogin() {
-        Toast.makeText(getApplicationContext(), "Facebook", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Facebook", Toast.LENGTH_SHORT).show();
     }
 }
